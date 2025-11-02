@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alchemy Lumière | AI-Powered Digital Excellence</title>
+    <title>Alchemy Lumière | AI-Powered Digital Alchemy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS Reset and Premium Variables */
+        /* === CSS RESET & GLOBAL VARIABLES === */
         :root {
             --primary-dark: #0A0A0A;
             --primary-light: #FFFFFF;
-            --accent-gold: #143627;
-            --accent-gold-light: #E0F2E9;
+            --accent-gold: #C9A96E;
+            --accent-gold-light: #F4EBD0;
             --accent-bronze: #8B7355;
             --accent-silver: #C0C0C0;
-            --gray-50: #FAFAFA;
-            --gray-100: #F5F5F5;
-            --gray-200: #E5E5E5;
-            --gray-800: #262626;
+            --accent-emerald: #143627;
+            --gradient-primary: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            --gradient-hero: linear-gradient(135deg, #0A0A0A 0%, #143627 50%, #0A0A0A 100%);
+            
             --transition-slow: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
             --transition-medium: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             --transition-fast: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            
             --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.12);
             --shadow-intense: 0 30px 60px rgba(0, 0, 0, 0.18);
-            --shadow-glow: 0 0 60px rgba(212, 175, 55, 0.15);
-            --shadow-gold-intense: 0 0 100px rgba(212, 175, 55, 0.3);
+            --shadow-glow: 0 0 60px rgba(201, 169, 110, 0.15);
+            --shadow-gold-intense: 0 0 100px rgba(201, 169, 110, 0.3);
+            
             --border-radius: 16px;
             --border-radius-lg: 24px;
-            --section-padding: clamp(4rem, 8vw, 8rem) 0;
+            --border-radius-xl: 36px;
+            
+            --section-padding: clamp(6rem, 12vw, 12rem) 0;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
         }
@@ -58,19 +64,90 @@
             position: relative;
         }
 
-        /* Smooth Scroll Progress Bar */
+        /* === CUSTOM CURSOR === */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(201, 169, 110, 0.3);
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.6s ease;
+        }
+
+        /* === SCROLL PROGRESS === */
         .scroll-progress {
             position: fixed;
             top: 0;
             left: 0;
             width: 0%;
             height: 4px;
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze), var(--accent-silver));
+            background: var(--gradient-primary);
             z-index: 10000;
             transition: width 0.1s ease-out;
         }
 
-        /* Enhanced Animated Background Elements with Parallax */
+        /* === PRELOADER === */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100000;
+            transition: opacity 0.8s var(--transition-slow), visibility 0.8s var(--transition-slow);
+        }
+
+        .preloader-content {
+            text-align: center;
+            color: var(--primary-light);
+        }
+
+        .preloader-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(201, 169, 110, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-gold);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 2rem;
+        }
+
+        .preloader-text {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* === ENHANCED ANIMATED BACKGROUND === */
         .bg-elements {
             position: fixed;
             top: 0;
@@ -85,7 +162,7 @@
         .bg-element {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-gold-light) 0%, rgba(20, 54, 39, 0.3) 40%, transparent 70%);
+            background: radial-gradient(circle, var(--accent-gold-light) 0%, rgba(201, 169, 110, 0.3) 40%, transparent 70%);
             opacity: 0.04;
             animation: float 20s infinite ease-in-out;
             filter: blur(60px);
@@ -124,25 +201,26 @@
             animation-delay: -7s;
         }
 
+        /* === TYPOGRAPHY === */
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
-            font-weight: 600;
+            font-weight: 700;
             line-height: 1.2;
             margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-size: clamp(3.5rem, 7vw, 7rem);
             letter-spacing: -0.02em;
         }
 
         h2 {
-            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-size: clamp(2.8rem, 5vw, 5rem);
             position: relative;
         }
 
         h3 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-size: clamp(2rem, 3.5vw, 3.5rem);
         }
 
         p {
@@ -157,11 +235,12 @@
             transition: var(--transition-fast);
         }
 
+        /* === LAYOUT === */
         .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 clamp(1.5rem, 4vw, 2rem);
+            padding: 0 clamp(1.5rem, 4vw, 3rem);
         }
 
         section {
@@ -169,13 +248,44 @@
             position: relative;
         }
 
-        /* Enhanced Premium Button Styles with Magnetic Effect */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-accent {
+            color: var(--accent-gold);
+        }
+
+        .section-header {
+            margin-bottom: 6rem;
+        }
+
+        .section-header h2 {
+            display: inline-block;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .text-center .section-header h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* === ENHANCED PREMIUM BUTTONS === */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1.35rem 2.75rem;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            padding: 1.5rem 3rem;
+            background: var(--gradient-primary);
             color: var(--primary-dark);
             border: none;
             border-radius: var(--border-radius);
@@ -187,11 +297,12 @@
             z-index: 1;
             gap: 0.75rem;
             box-shadow:
-                0 6px 20px rgba(20, 54, 39, 0.4),
+                0 8px 25px rgba(201, 169, 110, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn:before {
@@ -201,7 +312,7 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            background: var(--gradient-dark);
             transition: var(--transition-medium);
             z-index: -1;
         }
@@ -225,8 +336,9 @@
 
         .btn:hover {
             color: var(--accent-gold);
+            transform: translateY(-5px);
             box-shadow:
-                0 12px 35px rgba(20, 54, 39, 0.5),
+                0 15px 40px rgba(201, 169, 110, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
@@ -242,7 +354,7 @@
         }
 
         .btn-primary {
-            background: var(--accent-gold);
+            background: var(--gradient-primary);
             color: var(--primary-dark);
         }
 
@@ -261,38 +373,7 @@
             color: var(--primary-dark);
         }
 
-        .text-center {
-            text-align: center;
-        }
-
-        .text-accent {
-            color: var(--accent-gold);
-        }
-
-        .section-header {
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            display: inline-block;
-        }
-
-        .section-header h2:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--accent-gold);
-        }
-
-        .text-center .section-header h2:after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* Enhanced Premium Header with Advanced Glassmorphism */
+        /* === ENHANCED PREMIUM HEADER === */
         header {
             position: fixed;
             top: 0;
@@ -304,7 +385,7 @@
             z-index: 1000;
             padding: 1.5rem 0;
             transition: var(--transition-medium);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
         }
 
@@ -312,8 +393,8 @@
             padding: 1rem 0;
             box-shadow:
                 0 4px 30px rgba(0, 0, 0, 0.08),
-                0 0 1px rgba(212, 175, 55, 0.2);
-            background: rgba(255, 255, 255, 0.92);
+                0 0 1px rgba(201, 169, 110, 0.2);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .header-content {
@@ -340,7 +421,7 @@
             width: 48px;
             height: 48px;
             margin-right: 0.85rem;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -350,7 +431,7 @@
             color: var(--primary-dark);
             font-family: 'Playfair Display', serif;
             box-shadow:
-                0 6px 20px rgba(20, 54, 39, 0.4),
+                0 6px 20px rgba(201, 169, 110, 0.4),
                 inset 0 -2px 8px rgba(0, 0, 0, 0.1),
                 inset 0 2px 8px rgba(255, 255, 255, 0.3);
             transition: var(--transition-medium);
@@ -374,7 +455,7 @@
         .logo:hover .logo-icon {
             transform: scale(1.1) rotate(360deg);
             box-shadow:
-                0 8px 25px rgba(20, 54, 39, 0.6),
+                0 8px 25px rgba(201, 169, 110, 0.6),
                 inset 0 -2px 8px rgba(0, 0, 0, 0.15),
                 inset 0 2px 8px rgba(255, 255, 255, 0.4);
         }
@@ -432,14 +513,15 @@
             transition: var(--transition-medium);
         }
 
-        /* Enhanced Premium Hero Section with Parallax */
+        /* === ENHANCED PREMIUM HERO SECTION === */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--gray-50) 50%, var(--gray-100) 100%);
+            background: var(--gradient-hero);
+            color: var(--primary-light);
         }
 
         .hero::before {
@@ -450,7 +532,7 @@
             width: 50%;
             height: 100%;
             background:
-                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 60% 80%, rgba(139, 115, 85, 0.06) 0%, transparent 50%);
             pointer-events: none;
             will-change: transform;
@@ -466,15 +548,15 @@
 
         .hero-badge {
             display: inline-block;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            background: var(--gradient-primary);
             color: var(--primary-dark);
-            padding: 0.65rem 1.35rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 25px;
             font-size: 0.9rem;
             font-weight: 700;
             margin-bottom: 2rem;
             box-shadow:
-                0 6px 20px rgba(20, 54, 39, 0.4),
+                0 6px 20px rgba(201, 169, 110, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             animation: badgePulse 2s ease-in-out infinite;
             text-transform: uppercase;
@@ -483,16 +565,17 @@
 
         .hero h1 {
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent-gold) 100%);
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero-description {
-            font-size: 1.375rem;
+            font-size: 1.5rem;
             margin-bottom: 3rem;
-            color: var(--gray-800);
+            color: var(--accent-gold-light);
+            max-width: 700px;
         }
 
         .hero-actions {
@@ -514,7 +597,7 @@
         }
 
         .trust-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--accent-gold);
             margin-bottom: 0.5rem;
@@ -522,7 +605,7 @@
 
         .trust-label {
             font-size: 0.875rem;
-            color: var(--gray-800);
+            color: var(--accent-gold-light);
             font-weight: 500;
         }
 
@@ -534,7 +617,7 @@
             transform: translateY(-50%);
             width: 1px;
             height: 40px;
-            background: var(--gray-200);
+            background: rgba(201, 169, 110, 0.3);
         }
 
         .hero-bg {
@@ -555,7 +638,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 115, 85, 0.05) 100%);
+            background: linear-gradient(45deg, rgba(201, 169, 110, 0.1) 0%, rgba(139, 115, 85, 0.05) 100%);
         }
 
         .floating-elements {
@@ -599,15 +682,16 @@
             animation: float 18s infinite linear;
         }
 
-        /* Enhanced Premium Features Section */
+        /* === ENHANCED PREMIUM FEATURES SECTION === */
         .features {
-            background: var(--gray-100);
+            background: var(--primary-light);
+            position: relative;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .feature-card {
@@ -615,8 +699,8 @@
             backdrop-filter: blur(30px) saturate(180%);
             -webkit-backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 3.5rem 2.75rem;
-            border-radius: var(--border-radius-lg);
+            padding: 4rem 3rem;
+            border-radius: var(--border-radius-xl);
             box-shadow:
                 var(--shadow-soft),
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -634,7 +718,7 @@
             left: 0;
             width: 100%;
             height: 0;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            background: var(--gradient-primary);
             transition: var(--transition-medium);
             z-index: -1;
         }
@@ -646,7 +730,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(20, 54, 39, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
             opacity: 0;
             transition: var(--transition-slow);
             pointer-events: none;
@@ -661,12 +745,12 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-15px) scale(1.03);
             box-shadow:
                 var(--shadow-intense),
-                0 0 40px rgba(20, 54, 39, 0.2),
+                0 0 40px rgba(201, 169, 110, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            border-color: rgba(20, 54, 39, 0.3);
+            border-color: rgba(201, 169, 110, 0.3);
         }
 
         .feature-card:hover .feature-icon,
@@ -676,14 +760,14 @@
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            font-size: 4rem;
+            margin-bottom: 2rem;
             color: var(--accent-gold);
             transition: var(--transition-medium);
         }
 
         .feature-card h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             transition: var(--transition-medium);
         }
 
@@ -691,7 +775,7 @@
             transition: var(--transition-medium);
         }
 
-        /* AI Capabilities Section */
+        /* === AI CAPABILITIES SECTION === */
         .ai-section {
             background: var(--primary-dark);
             color: var(--primary-light);
@@ -705,37 +789,37 @@
 
         .ai-features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
         }
 
         .ai-feature {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
+            border-radius: var(--border-radius-lg);
             transition: var(--transition-medium);
         }
 
         .ai-feature:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .ai-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            font-size: 4rem;
+            margin-bottom: 2rem;
         }
 
         .ai-feature h3 {
             color: var(--accent-gold);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        /* Services Section */
+        /* === SERVICES SECTION === */
         .services {
             background: var(--primary-light);
             position: relative;
@@ -744,19 +828,20 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
         }
 
         .service-card {
-            background: var(--gray-100);
-            padding: 3rem 2.5rem;
-            border-radius: var(--border-radius);
+            background: var(--primary-light);
+            padding: 4rem 3rem;
+            border-radius: var(--border-radius-lg);
             transition: var(--transition-medium);
-            border: 1px solid var(--gray-200);
+            border: 1px solid rgba(201, 169, 110, 0.2);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            box-shadow: var(--shadow-soft);
         }
 
         .service-card:before {
@@ -766,7 +851,7 @@
             left: 0;
             width: 100%;
             height: 0;
-            background: var(--accent-gold);
+            background: var(--gradient-primary);
             transition: var(--transition-medium);
             z-index: -1;
         }
@@ -776,9 +861,9 @@
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-color: var(--accent-gold);
-            box-shadow: var(--shadow-medium);
+            box-shadow: var(--shadow-intense);
         }
 
         .service-card:hover h3,
@@ -789,27 +874,27 @@
 
         .service-card h3 {
             color: var(--accent-gold);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             transition: var(--transition-medium);
         }
 
         .price {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             color: var(--accent-gold);
             transition: var(--transition-medium);
         }
 
         .service-features {
             list-style: none;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .service-features li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             position: relative;
-            padding-left: 1.75rem;
+            padding-left: 2rem;
             transition: var(--transition-medium);
         }
 
@@ -826,44 +911,49 @@
             color: var(--primary-dark);
         }
 
-        /* Testimonials Section */
+        /* === TESTIMONIALS SECTION === */
         .testimonials {
-            background: var(--gray-100);
+            background: var(--primary-dark);
+            color: var(--primary-light);
             position: relative;
         }
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .testimonial-card {
-            background: var(--primary-light);
-            padding: 2.5rem;
-            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3.5rem;
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-soft);
             transition: var(--transition-medium);
             position: relative;
+            border: 1px solid rgba(201, 169, 110, 0.1);
         }
 
         .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+            border-color: rgba(201, 169, 110, 0.3);
         }
 
         .testimonial-quote {
             font-style: italic;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             position: relative;
+            font-size: 1.2rem;
+            line-height: 1.8;
         }
 
         .testimonial-quote:before {
             content: '"';
             position: absolute;
-            top: -10px;
-            left: -10px;
-            font-size: 4rem;
+            top: -20px;
+            left: -15px;
+            font-size: 5rem;
             color: var(--accent-gold);
             opacity: 0.3;
             font-family: serif;
@@ -872,12 +962,12 @@
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .author-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: var(--accent-gold);
             display: flex;
@@ -885,21 +975,23 @@
             justify-content: center;
             color: var(--primary-dark);
             font-weight: 700;
+            font-size: 1.5rem;
         }
 
         .author-info h4 {
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
         }
 
         .author-info p {
             margin-bottom: 0;
             font-size: 0.9rem;
-            color: var(--gray-800);
+            color: var(--accent-gold-light);
         }
 
-        /* CTA Section */
+        /* === CTA SECTION === */
         .cta-section {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            background: var(--gradient-dark);
             color: var(--primary-light);
             text-align: center;
             position: relative;
@@ -911,37 +1003,37 @@
         }
 
         .cta-content {
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
-        /* Footer */
+        /* === FOOTER === */
         footer {
             background: var(--primary-dark);
             color: var(--primary-light);
-            padding: 4rem 0 2rem;
+            padding: 6rem 0 3rem;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
         }
 
         .footer-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
         }
@@ -952,7 +1044,8 @@
 
         .footer-links h4 {
             color: var(--accent-gold);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
         }
 
         .footer-links ul {
@@ -960,11 +1053,11 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .footer-links a {
-            color: var(--gray-200);
+            color: var(--accent-gold-light);
             transition: var(--transition-fast);
         }
 
@@ -974,13 +1067,13 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 3rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray-200);
+            color: var(--accent-gold-light);
             font-size: 0.9rem;
         }
 
-        /* Enhanced Animations */
+        /* === ENHANCED ANIMATIONS === */
         @keyframes fadeInUp {
             to {
                 opacity: 1;
@@ -1002,13 +1095,13 @@
 
         @keyframes pulse {
             0% {
-                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4);
             }
             70% {
-                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+                box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
             }
             100% {
-                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
             }
         }
 
@@ -1020,11 +1113,11 @@
 
         @keyframes badgePulse {
             0%, 100% {
-                box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+                box-shadow: 0 6px 20px rgba(201, 169, 110, 0.4);
                 transform: scale(1);
             }
             50% {
-                box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+                box-shadow: 0 8px 30px rgba(201, 169, 110, 0.6);
                 transform: scale(1.05);
             }
         }
@@ -1040,9 +1133,9 @@
             }
         }
 
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .fade-in {
@@ -1056,14 +1149,14 @@
             transform: translateY(0);
         }
 
-        /* Toast Notification */
+        /* === TOAST NOTIFICATION === */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: var(--primary-dark);
             color: var(--primary-light);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-medium);
             display: flex;
@@ -1073,6 +1166,7 @@
             transform: translateY(100px);
             opacity: 0;
             transition: transform var(--transition-medium), opacity var(--transition-medium);
+            max-width: 400px;
         }
 
         .toast.active {
@@ -1092,7 +1186,13 @@
             color: var(--primary-dark);
         }
 
-        /* Media Queries */
+        /* === MEDIA QUERIES === */
+        @media (max-width: 1024px) {
+            .hero-bg {
+                width: 60%;
+            }
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 position: relative;
@@ -1172,6 +1272,12 @@
             .mobile-menu-btn.active span:nth-child(3) {
                 transform: rotate(-45deg) translate(6px, -6px);
             }
+            
+            .feature-card,
+            .service-card,
+            .testimonial-card {
+                padding: 3rem 2rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1185,12 +1291,29 @@
             
             .feature-card,
             .service-card {
-                padding: 2rem 1.5rem;
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">Alchemy Lumière</div>
+            <div class="loader"></div>
+            <div class="preloader-text">Initializing Digital Alchemy</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -1206,7 +1329,7 @@
     <header id="header">
         <div class="container header-content">
             <a href="#" class="logo">
-                <img src="logo.png" alt="Alchemy Lumière Logo" class="logo-icon" />
+                <div class="logo-icon">AL</div>
                 Alchemy Lumière<span>v3</span>
             </a>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -1220,7 +1343,7 @@
                     <li><a href="#ai-capabilities">AI Power</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#contact" class="btn btn-secondary">Request Consultation</a></li>
+                    <li><a href="consultation.html" class="btn btn-secondary">Request Consultation</a></li>
                 </ul>
             </nav>
         </div>
@@ -1229,15 +1352,17 @@
     <!-- Enhanced Premium Hero Section -->
     <section class="hero">
         <div class="container hero-content">
-            <div class="hero-badge">AI-Powered Excellence</div>
-            <h1>Digital Masterpieces Powered by DeepSeek AI</h1>
-            <p class="hero-description">Leveraging advanced AI architecture to create exclusive, bespoke web experiences that anticipate user needs and drive exponential growth.</p>
+            <div class="hero-badge">AI-Powered Digital Alchemy</div>
+            <h1>Where Code Meets Artistry</h1>
+            <p class="hero-description">We transform digital visions into extraordinary experiences through the alchemy of cutting-edge AI, masterful design, and technical excellence.</p>
             <div class="hero-actions">
                 <a href="#services" class="btn btn-primary">
-                    Explore AI Services
+                    <i class="fas fa-gem"></i>
+                    Explore Services
                 </a>
-                <a href="#ai-capabilities" class="btn btn-secondary">
-                    View AI Demo
+                <a href="consultation.html" class="btn btn-secondary">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    Begin Transformation
                 </a>
             </div>
             <div class="trust-indicators">
@@ -1253,6 +1378,10 @@
                     <div class="trust-value">14.8T</div>
                     <div class="trust-label">Training Tokens</div>
                 </div>
+                <div class="trust-item">
+                    <div class="trust-value">128K</div>
+                    <div class="trust-label">Context Window</div>
+                </div>
             </div>
         </div>
         <div class="hero-bg"></div>
@@ -1267,28 +1396,39 @@
     <section id="features" class="features">
         <div class="container">
             <div class="section-header text-center">
-                <h2>Why Alchemy Lumière Stands Apart</h2>
+                <h2>The Alchemy Lumière Difference</h2>
+                <p>We don't just build websites; we craft digital masterpieces that transform businesses</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                     <h3>Lightning Performance</h3>
                     <p>Every website is meticulously optimized for speed with LCP under 2.5s, ensuring premium user experiences that convert at exceptional rates.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">🔒</div>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>Enterprise Security</h3>
                     <p>End-to-end encryption, GDPR compliance, and rigorous security protocols protect your brand reputation and user data with military-grade precision.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">🎨</div>
+                    <div class="feature-icon"><i class="fas fa-palette"></i></div>
                     <h3>Bespoke Design</h3>
                     <p>No templates. Every project begins with a blank canvas, meticulously crafted to reflect your unique brand identity and vision.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">📈</div>
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Conversion Optimized</h3>
                     <p>Data-driven design decisions and strategic UX patterns maximize engagement and drive measurable business objectives with scientific precision.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI-Enhanced</h3>
+                    <p>Leverage our proprietary AI architecture to create intelligent, adaptive experiences that anticipate user needs and behaviors.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                    <h3>Future-Proof</h3>
+                    <p>Built with scalability and adaptability in mind, ensuring your digital presence evolves seamlessly with emerging technologies and trends.</p>
                 </div>
             </div>
         </div>
@@ -1303,19 +1443,24 @@
             </div>
             <div class="ai-features-grid">
                 <div class="ai-feature fade-in">
-                    <div class="ai-icon">🧠</div>
+                    <div class="ai-icon"><i class="fas fa-brain"></i></div>
                     <h3>Multi-Token Prediction</h3>
                     <p>Advanced AI that anticipates user behavior and optimizes experiences in real-time</p>
                 </div>
                 <div class="ai-feature fade-in">
-                    <div class="ai-icon">⚡</div>
+                    <div class="ai-icon"><i class="fas fa-bolt"></i></div>
                     <h3>Efficient Inference</h3>
                     <p>37B activated parameters per token ensure lightning-fast performance</p>
                 </div>
                 <div class="ai-feature fade-in">
-                    <div class="ai-icon">🌐</div>
+                    <div class="ai-icon"><i class="fas fa-expand"></i></div>
                     <h3>128K Context Window</h3>
                     <p>Comprehensive understanding of complex user journeys and interactions</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Adaptive Learning</h3>
+                    <p>Continuously improves based on user interactions and feedback</p>
                 </div>
             </div>
         </div>
@@ -1326,6 +1471,7 @@
         <div class="container">
             <div class="section-header text-center">
                 <h2>Our Exclusive Service Tiers</h2>
+                <p>Tailored solutions for visionary brands at every stage of their digital transformation</p>
             </div>
             <div class="services-grid">
                 <div class="service-card fade-in">
@@ -1339,7 +1485,7 @@
                         <li>Technical requirements specification</li>
                         <li>Project roadmap & timeline</li>
                     </ul>
-                    <a href="#contact" class="btn btn-secondary">Request This Package</a>
+                    <a href="consultation.html" class="btn btn-secondary">Request This Package</a>
                 </div>
                 <div class="service-card fade-in">
                     <h3>Signature Website</h3>
@@ -1354,7 +1500,7 @@
                         <li>Performance optimization</li>
                         <li>3 months of premium support</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Request This Package</a>
+                    <a href="consultation.html" class="btn btn-primary">Request This Package</a>
                 </div>
                 <div class="service-card fade-in">
                     <h3>Ultra Exclusive</h3>
@@ -1368,8 +1514,9 @@
                         <li>Enterprise-grade security</li>
                         <li>Dedicated project manager</li>
                         <li>12 months premium support</li>
+                        <li>Quarterly performance reviews</li>
                     </ul>
-                    <a href="#contact" class="btn btn-secondary">Request Custom Quote</a>
+                    <a href="consultation.html" class="btn btn-secondary">Request Custom Quote</a>
                 </div>
             </div>
         </div>
@@ -1380,14 +1527,15 @@
         <div class="container">
             <div class="section-header text-center">
                 <h2>Trusted by Visionary Brands</h2>
+                <p>Discover how Alchemy Lumière has transformed digital experiences for industry leaders</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card fade-in">
                     <div class="testimonial-quote">
-                        Alchemy Lumière transformed our digital presence completely. The AI-powered insights led to a 47% increase in conversions within the first month.
+                        Alchemy Lumière transformed our digital presence completely. The AI-powered insights led to a 47% increase in conversions within the first month. Their attention to detail and technical excellence is simply unmatched.
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar">S</div>
+                        <div class="author-avatar">SJ</div>
                         <div class="author-info">
                             <h4>Sarah Johnson</h4>
                             <p>CEO, LuxeBrand Global</p>
@@ -1396,10 +1544,10 @@
                 </div>
                 <div class="testimonial-card fade-in">
                     <div class="testimonial-quote">
-                        The level of sophistication and attention to detail is unparalleled. Our website now feels like a true extension of our brand's luxury positioning.
+                        The level of sophistication and attention to detail is unparalleled. Our website now feels like a true extension of our brand's luxury positioning. Working with Alchemy Lumière was a transformative experience.
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar">M</div>
+                        <div class="author-avatar">MR</div>
                         <div class="author-info">
                             <h4>Marcus Rodriguez</h4>
                             <p>CTO, Nexus Analytics</p>
@@ -1408,10 +1556,10 @@
                 </div>
                 <div class="testimonial-card fade-in">
                     <div class="testimonial-quote">
-                        Working with DeepSeek felt like having a strategic partner rather than just a vendor. Their AI capabilities anticipated our needs before we even articulated them.
+                        Working with Alchemy Lumière felt like having a strategic partner rather than just a vendor. Their AI capabilities anticipated our needs before we even articulated them. The results have been extraordinary.
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar">E</div>
+                        <div class="author-avatar">EV</div>
                         <div class="author-info">
                             <h4>Eleanor Vance</h4>
                             <p>Marketing Director, Prestige Holdings</p>
@@ -1427,12 +1575,18 @@
         <div class="container">
             <div class="cta-content">
                 <div class="section-header text-center">
-                    <h2>Ready to Transform Your Digital Presence?</h2>
+                    <h2>Ready to Begin Your Digital Transformation?</h2>
                     <p>Join the exclusive group of visionary brands leveraging AI-powered digital excellence</p>
                 </div>
                 <div class="cta-buttons">
-                    <a href="consultation.html" class="btn btn-primary" >Schedule Consultation</a>
-                    <a href="#services" class="btn btn-secondary">View Case Studies</a>
+                    <a href="consultation.html" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i>
+                        Schedule Consultation
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        <i class="fas fa-book-open"></i>
+                        View Case Studies
+                    </a>
                 </div>
             </div>
         </div>
@@ -1444,7 +1598,7 @@
             <div class="footer-content">
                 <div class="footer-info">
                     <div class="footer-logo">
-                        <div class="logo-icon">D</div>
+                        <div class="logo-icon">AL</div>
                         Alchemy Lumière<span>v3</span>
                     </div>
                     <p>Creating digital masterpieces powered by advanced AI architecture for visionary brands worldwide.</p>
@@ -1470,10 +1624,10 @@
                 <div class="footer-links">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
                     </ul>
                 </div>
             </div>
@@ -1490,26 +1644,66 @@
     </div>
 
     <script>
-        // DOM Elements
-        const header = document.getElementById('header');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-        const fadeElements = document.querySelectorAll('.fade-in');
-        const toast = document.getElementById('toast');
-        const scrollProgress = document.getElementById('scrollProgress');
-        const bgElements = document.getElementById('bgElements');
-        const heroSection = document.querySelector('.hero');
+        // === PRELOADER ===
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 1500);
+        });
 
-        // Scroll Progress Bar
+        // === CUSTOM CURSOR ===
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+            cursorFollower.style.transform = 'scale(1.2)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+            cursorFollower.style.transform = 'scale(1)';
+        });
+
+        // Add hover effect for interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .feature-card, .service-card, .ai-feature, .testimonial-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursorFollower.style.transform = 'scale(1.5)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursorFollower.style.transform = 'scale(1)';
+            });
+        });
+
+        // === SCROLL PROGRESS ===
         function updateScrollProgress() {
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (window.scrollY / windowHeight) * 100;
-            scrollProgress.style.width = scrolled + '%';
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
         }
 
-        // Parallax Effect for Background Elements
+        // === PARALLAX EFFECT ===
         function updateParallax() {
             const scrolled = window.scrollY;
+            const bgElements = document.getElementById('bgElements');
+            
             if (bgElements) {
                 const elements = bgElements.querySelectorAll('.bg-element');
                 elements.forEach((el, index) => {
@@ -1519,6 +1713,7 @@
             }
 
             // Hero parallax
+            const heroSection = document.querySelector('.hero');
             if (heroSection && scrolled < window.innerHeight) {
                 const heroContent = heroSection.querySelector('.hero-content');
                 if (heroContent) {
@@ -1528,19 +1723,22 @@
             }
         }
 
-        // Header scroll effect with progress bar
+        // === HEADER SCROLL EFFECT ===
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                header.classList.add('scrolled');
+                document.getElementById('header').classList.add('scrolled');
             } else {
-                header.classList.remove('scrolled');
+                document.getElementById('header').classList.remove('scrolled');
             }
 
             updateScrollProgress();
             requestAnimationFrame(updateParallax);
         });
 
-        // Enhanced Mobile menu toggle
+        // === MOBILE MENU TOGGLE ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
         mobileMenuBtn.addEventListener('click', () => {
             mainNav.classList.toggle('active');
             mobileMenuBtn.classList.toggle('active');
@@ -1556,8 +1754,9 @@
             });
         });
 
-        // Show toast notification
+        // === TOAST NOTIFICATION ===
         function showToast(message) {
+            const toast = document.getElementById('toast');
             toast.querySelector('.toast-message').textContent = message;
             toast.classList.add('active');
             
@@ -1566,8 +1765,9 @@
             }, 3000);
         }
 
-        // Enhanced Fade in elements on scroll with stagger
+        // === FADE IN ELEMENTS ON SCROLL ===
         function checkFade() {
+            const fadeElements = document.querySelectorAll('.fade-in');
             fadeElements.forEach((element, index) => {
                 const elementTop = element.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
@@ -1583,7 +1783,7 @@
         window.addEventListener('scroll', checkFade);
         window.addEventListener('load', checkFade);
 
-        // Magnetic Button Effect
+        // === MAGNETIC BUTTON EFFECT ===
         function addMagneticEffect() {
             const buttons = document.querySelectorAll('.btn');
 
@@ -1607,7 +1807,7 @@
             addMagneticEffect();
         }
 
-        // Smooth scrolling for anchor links
+        // === SMOOTH SCROLLING ===
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1625,7 +1825,7 @@
             });
         });
 
-        // Add interaction to service cards
+        // === SERVICE CARD INTERACTIONS ===
         document.querySelectorAll('.service-card .btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1634,16 +1834,15 @@
             });
         });
 
-        // Initialize fade elements on load
+        // === INITIALIZE ON LOAD ===
         document.addEventListener('DOMContentLoaded', () => {
             checkFade();
             
             // Show welcome message after a short delay
             setTimeout(() => {
-                showToast('Welcome to Alchemy Lumière - AI-Powered Digital Excellence');
-            }, 1500);
+                showToast('Welcome to Alchemy Lumière - Where Digital Dreams Become Reality');
+            }, 2000);
         });
     </script>
 </body>
-
 </html>
