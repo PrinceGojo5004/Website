@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Executive Dashboard | DeepSeek v3</title>
+    <title>Alchemy Lumière | AI-Powered Digital Alchemy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* === CSS RESET & GLOBAL VARIABLES === */
         :root {
             --primary-dark: #0A0A0A;
             --primary-light: #FFFFFF;
-            --accent-gold: #D4AF37;
-            --accent-gold-light: #F4E4A6;
+            --accent-gold: #C9A96E;
+            --accent-gold-light: #F4EBD0;
             --accent-bronze: #8B7355;
             --accent-silver: #C0C0C0;
-            --gray-50: #FAFAFA;
-            --gray-100: #F5F5F5;
-            --gray-200: #E5E5E5;
-            --gray-800: #262626;
+            --accent-emerald: #143627;
+            --gradient-primary: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            --gradient-hero: linear-gradient(135deg, #0A0A0A 0%, #143627 50%, #0A0A0A 100%);
+            
             --transition-slow: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
             --transition-medium: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             --transition-fast: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            
             --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.12);
             --shadow-intense: 0 30px 60px rgba(0, 0, 0, 0.18);
-            --shadow-glow: 0 0 60px rgba(212, 175, 55, 0.15);
+            --shadow-glow: 0 0 60px rgba(201, 169, 110, 0.15);
+            --shadow-gold-intense: 0 0 100px rgba(201, 169, 110, 0.3);
+            
             --border-radius: 16px;
-            --border-radius-sm: 8px;
             --border-radius-lg: 24px;
+            --border-radius-xl: 36px;
+            
+            --section-padding: clamp(6rem, 12vw, 12rem) 0;
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
         }
@@ -39,20 +47,107 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            scroll-padding-top: 100px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
             color: var(--primary-dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+            background-color: var(--primary-light);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            display: flex;
-            min-height: 100vh;
             position: relative;
         }
 
-        /* Animated background elements */
+        /* === CUSTOM CURSOR === */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(201, 169, 110, 0.3);
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.6s ease;
+        }
+
+        /* === SCROLL PROGRESS === */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient-primary);
+            z-index: 10000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* === PRELOADER === */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100000;
+            transition: opacity 0.8s var(--transition-slow), visibility 0.8s var(--transition-slow);
+        }
+
+        .preloader-content {
+            text-align: center;
+            color: var(--primary-light);
+        }
+
+        .preloader-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(201, 169, 110, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-gold);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 2rem;
+        }
+
+        .preloader-text {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* === ENHANCED ANIMATED BACKGROUND === */
         .bg-elements {
             position: fixed;
             top: 0;
@@ -61,68 +156,76 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
+            pointer-events: none;
         }
 
         .bg-element {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-gold-light) 0%, transparent 70%);
-            opacity: 0.03;
+            background: radial-gradient(circle, var(--accent-gold-light) 0%, rgba(201, 169, 110, 0.3) 40%, transparent 70%);
+            opacity: 0.04;
             animation: float 20s infinite ease-in-out;
+            filter: blur(60px);
+            will-change: transform;
         }
 
         .bg-element:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            top: -100px;
-            left: -100px;
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            left: -200px;
             animation-delay: 0s;
         }
 
         .bg-element:nth-child(2) {
-            width: 300px;
-            height: 300px;
+            width: 500px;
+            height: 500px;
             top: 50%;
-            right: -50px;
+            right: -150px;
             animation-delay: -5s;
         }
 
         .bg-element:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            bottom: -50px;
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
             left: 30%;
             animation-delay: -10s;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+        .bg-element:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            top: 30%;
+            left: 50%;
+            animation-delay: -7s;
         }
 
+        /* === TYPOGRAPHY === */
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
-            font-weight: 600;
+            font-weight: 700;
             line-height: 1.2;
             margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(3.5rem, 7vw, 7rem);
             letter-spacing: -0.02em;
         }
 
         h2 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            position: relative;
         }
 
         h3 {
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-size: clamp(2rem, 3.5vw, 3.5rem);
         }
 
         p {
             margin-bottom: 1.5rem;
-            font-size: 1rem;
+            font-size: 1.125rem;
             color: var(--gray-800);
         }
 
@@ -132,31 +235,74 @@
             transition: var(--transition-fast);
         }
 
+        /* === LAYOUT === */
         .container {
             width: 100%;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 clamp(1.5rem, 4vw, 3rem);
         }
 
-        /* Premium button styles with micro-interactions */
+        section {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-accent {
+            color: var(--accent-gold);
+        }
+
+        .section-header {
+            margin-bottom: 6rem;
+        }
+
+        .section-header h2 {
+            display: inline-block;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .text-center .section-header h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* === ENHANCED PREMIUM BUTTONS === */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.75rem 1.5rem;
-            background: var(--accent-gold);
+            padding: 1.5rem 3rem;
+            background: var(--gradient-primary);
             color: var(--primary-dark);
             border: none;
-            border-radius: var(--border-radius-sm);
-            font-weight: 600;
+            border-radius: var(--border-radius);
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition-medium);
             position: relative;
             overflow: hidden;
             z-index: 1;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            gap: 0.75rem;
+            box-shadow:
+                0 8px 25px rgba(201, 169, 110, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
         }
 
         .btn:before {
@@ -166,9 +312,22 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: var(--primary-dark);
+            background: var(--gradient-dark);
             transition: var(--transition-medium);
             z-index: -1;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
         .btn:hover:before {
@@ -177,90 +336,78 @@
 
         .btn:hover {
             color: var(--accent-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            box-shadow:
+                0 15px 40px rgba(201, 169, 110, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .btn:active {
-            transform: translateY(0);
+            transform: translateY(-2px) scale(1.02);
             transition: var(--transition-fast);
         }
 
-        .btn-outline {
+        .btn:active:after {
+            width: 300px;
+            height: 300px;
+            transition: 0s;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary {
             background: transparent;
             border: 2px solid var(--accent-gold);
             color: var(--accent-gold);
             box-shadow: none;
         }
 
-        .btn-outline:before {
+        .btn-secondary:before {
             background: var(--accent-gold);
         }
 
-        .btn-outline:hover {
+        .btn-secondary:hover {
             color: var(--primary-dark);
         }
 
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-        }
-
-        .btn-danger:before {
-            background: #7f1d1d;
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
-        }
-
-        /* Premium Glass Sidebar */
-        .sidebar {
-            width: 280px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            color: var(--primary-light);
-            height: 100vh;
+        /* === ENHANCED PREMIUM HEADER === */
+        header {
             position: fixed;
-            left: 0;
-            top: 0;
-            transition: var(--transition-medium);
-            z-index: 100;
-            overflow-y: auto;
-            border-right: 1px solid var(--glass-border);
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .sidebar-header {
-            padding: 2rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sidebar-header:before {
-            content: '';
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
-            z-index: -1;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: var(--transition-medium);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            box-shadow:
+                0 4px 30px rgba(0, 0, 0, 0.08),
+                0 0 1px rgba(201, 169, 110, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: var(--primary-light);
+            color: var(--primary-dark);
             display: flex;
             align-items: center;
         }
@@ -271,553 +418,745 @@
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            margin-right: 0.75rem;
-            background: var(--accent-gold);
+            width: 48px;
+            height: 48px;
+            margin-right: 0.85rem;
+            background: var(--gradient-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--primary-dark);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
-        }
-
-        .sidebar-nav {
-            padding: 1.5rem 0;
-        }
-
-        .nav-item {
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            align-items: center;
+            font-family: 'Playfair Display', serif;
+            box-shadow:
+                0 6px 20px rgba(201, 169, 110, 0.4),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1),
+                inset 0 2px 8px rgba(255, 255, 255, 0.3);
             transition: var(--transition-medium);
-            cursor: pointer;
             position: relative;
-            overflow: hidden;
         }
 
-        .nav-item:before {
+        .logo-icon::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: var(--transition-medium);
-        }
-
-        .nav-item:hover:before {
-            left: 100%;
-        }
-
-        .nav-item.active {
-            background: rgba(212, 175, 55, 0.1);
-            border-left: 4px solid var(--accent-gold);
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-icon {
-            margin-right: 0.75rem;
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        /* Main Content with Glass Effect */
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 2rem;
-            transition: var(--transition-medium);
-            position: relative;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--primary-light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .admin-header:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: var(--accent-gold);
-        }
-
-        .admin-title {
-            margin-bottom: 0;
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        /* Enhanced Stats Cards with Progress Indicators */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--primary-light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            transition: var(--transition-medium);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent-gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: var(--transition-medium);
-        }
-
-        .stat-card:hover:before {
-            transform: scaleX(1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .stat-trend {
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
-        }
-
-        .stat-trend.negative {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray-800);
-            font-weight: 500;
-        }
-
-        .stat-progress {
-            height: 4px;
-            background: var(--gray-200);
-            border-radius: 2px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-
-        .stat-progress-bar {
-            height: 100%;
-            background: var(--accent-gold);
-            border-radius: 2px;
-            transition: width 1.5s ease-in-out;
-        }
-
-        /* Premium Table with Enhanced Interactions */
-        .table-container {
-            background: var(--primary-light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .table-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .table-title {
-            margin-bottom: 0;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: var(--gray-100);
-            border-radius: var(--border-radius-sm);
-            padding: 0.5rem 1rem;
-            transition: var(--transition-fast);
-        }
-
-        .search-box:focus-within {
-            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
-        }
-
-        .search-box input {
-            border: none;
-            background: transparent;
-            outline: none;
-            padding: 0.25rem 0.5rem;
-            width: 200px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: var(--gray-100);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--gray-800);
-            border-bottom: 1px solid var(--gray-200);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            transition: var(--transition-fast);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr {
-            transition: var(--transition-fast);
-        }
-
-        tr:hover {
-            background: rgba(212, 175, 55, 0.03);
-        }
-
-        tr:hover td {
-            transform: translateX(4px);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: var(--transition-fast);
-        }
-
-        .status-new {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .status-contacted {
-            background: #f0fdf4;
-            color: #166534;
-        }
-
-        .status-completed {
-            background: #fefce8;
-            color: #854d0e;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Premium Modal with Enhanced UX */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-silver), var(--accent-bronze), var(--accent-gold));
+            background-size: 300% 300%;
+            animation: gradientRotate 4s linear infinite;
+            z-index: -1;
             opacity: 0;
-            transition: opacity var(--transition-medium);
+            filter: blur(6px);
+            transition: var(--transition-medium);
         }
 
-        .modal.active {
-            opacity: 1;
+        .logo:hover .logo-icon {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow:
+                0 8px 25px rgba(201, 169, 110, 0.6),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.15),
+                inset 0 2px 8px rgba(255, 255, 255, 0.4);
         }
 
-        .modal-content {
-            background: var(--primary-light);
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-intense);
-            transform: scale(0.9);
-            transition: transform var(--transition-medium);
+        .logo:hover .logo-icon::before {
+            opacity: 0.6;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            font-weight: 500;
             position: relative;
+            padding: 0.5rem 0;
         }
 
-        .modal.active .modal-content {
-            transform: scale(1);
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: var(--transition-medium);
         }
 
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: var(--primary-light);
-            z-index: 10;
+        nav a:hover:after {
+            width: 100%;
         }
 
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray-800);
-            transition: var(--transition-fast);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close:hover {
-            background: var(--gray-100);
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .detail-item {
-            margin-bottom: 1rem;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 0.25rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .detail-value {
-            color: var(--primary-dark);
-            font-size: 1rem;
-        }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
-        /* Mobile Menu Button with Animation */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary-dark);
-            width: 40px;
+            z-index: 1001;
+            width: 30px;
+            height: 30px;
+            position: relative;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-dark);
+            margin: 6px 0;
+            transition: var(--transition-medium);
+        }
+
+        /* === ENHANCED PREMIUM HERO SECTION === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-hero);
+            color: var(--primary-light);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(201, 169, 110, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 80%, rgba(139, 115, 85, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .hero-content {
+            max-width: 950px;
+            position: relative;
+            z-index: 2;
+            animation: heroReveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            opacity: 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--primary-dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 6px 20px rgba(201, 169, 110, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-gold-light);
+            max-width: 700px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-indicators {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .trust-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .trust-label {
+            font-size: 0.875rem;
+            color: var(--accent-gold-light);
+            font-weight: 500;
+        }
+
+        .trust-item:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
             height: 40px;
+            background: rgba(201, 169, 110, 0.3);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 45%;
+            height: 100%;
+            background: var(--primary-dark);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+
+        .hero-bg:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(201, 169, 110, 0.1) 0%, rgba(139, 115, 85, 0.05) 100%);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: var(--accent-gold);
+            opacity: 0.1;
             border-radius: 50%;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 10%;
+            animation: float 20s infinite linear;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            left: 5%;
+            animation: float 15s infinite linear reverse;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            right: 15%;
+            animation: float 18s infinite linear;
+        }
+
+        /* === ENHANCED PREMIUM FEATURES SECTION === */
+        .features {
+            background: var(--primary-light);
+            position: relative;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 4rem 3rem;
+            border-radius: var(--border-radius-xl);
+            box-shadow:
+                var(--shadow-soft),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: var(--transition-medium);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--gradient-primary);
+            transition: var(--transition-medium);
+            z-index: -1;
+        }
+
+        .feature-card:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition-slow);
+            pointer-events: none;
+        }
+
+        .feature-card:hover:before {
+            height: 100%;
+        }
+
+        .feature-card:hover:after {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow:
+                var(--shadow-intense),
+                0 0 40px rgba(201, 169, 110, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .feature-card:hover .feature-icon,
+        .feature-card:hover h3,
+        .feature-card:hover p {
+            color: var(--primary-dark);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+            transition: var(--transition-medium);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1.5rem;
+            transition: var(--transition-medium);
+        }
+
+        .feature-card p {
+            transition: var(--transition-medium);
+        }
+
+        /* === AI CAPABILITIES SECTION === */
+        .ai-section {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-section .section-header h2:after {
+            background: var(--primary-light);
+        }
+
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .ai-feature {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-medium);
+        }
+
+        .ai-feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        .ai-feature h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        /* === SERVICES SECTION === */
+        .services {
+            background: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+        }
+
+        .service-card {
+            background: var(--primary-light);
+            padding: 4rem 3rem;
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-medium);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--gradient-primary);
+            transition: var(--transition-medium);
+            z-index: -1;
+        }
+
+        .service-card:hover:before {
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .service-card:hover h3,
+        .service-card:hover .price,
+        .service-card:hover .service-features li {
+            color: var(--primary-dark);
+        }
+
+        .service-card h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-medium);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            color: var(--accent-gold);
+            transition: var(--transition-medium);
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .service-features li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 2rem;
+            transition: var(--transition-medium);
+        }
+
+        .service-features li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 700;
+            transition: var(--transition-medium);
+        }
+
+        .service-card:hover .service-features li:before {
+            color: var(--primary-dark);
+        }
+
+        /* === TESTIMONIALS SECTION === */
+        .testimonials {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            position: relative;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-medium);
+            position: relative;
+            border: 1px solid rgba(201, 169, 110, 0.1);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+            border-color: rgba(201, 169, 110, 0.3);
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-quote:before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            font-size: 5rem;
+            color: var(--accent-gold);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        .author-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--accent-gold-light);
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            background: var(--gradient-dark);
+            color: var(--primary-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section .section-header h2:after {
+            background: var(--accent-gold);
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 4rem;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            padding: 6rem 0 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo span {
+            color: var(--accent-gold);
+        }
+
+        .footer-links h4 {
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--accent-gold-light);
             transition: var(--transition-fast);
         }
 
-        .mobile-menu-btn:hover {
-            background: var(--gray-100);
+        .footer-links a:hover {
+            color: var(--accent-gold);
         }
 
-        /* Enhanced Responsive Design */
-        @media (max-width: 1200px) {
-            .sidebar {
-                width: 240px;
-            }
-            
-            .main-content {
-                margin-left: 240px;
-            }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--accent-gold-light);
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-100%);
-                width: 280px;
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .detail-grid {
-                grid-template-columns: 1fr;
+        /* === ENHANCED ANIMATIONS === */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 768px) {
-            .admin-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
             }
-            
-            .admin-actions {
-                width: 100%;
-                justify-content: space-between;
+            50% {
+                transform: translateY(-20px) rotate(180deg);
             }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
+            100% {
+                transform: translateY(0) rotate(360deg);
             }
-            
-            .table-container {
-                overflow-x: auto;
-            }
-            
-            table {
-                min-width: 800px;
-            }
-            
-            .search-box input {
-                width: 150px;
-            }
-        }
-
-        /* Psychological persuasion elements */
-        .urgency-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+            0% {
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
+            }
         }
 
-        .social-proof {
-            display: flex;
-            align-items: center;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--gray-800);
+        @keyframes gradientRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .social-proof img {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(201, 169, 110, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(201, 169, 110, 0.6);
+                transform: scale(1.05);
+            }
         }
 
-        /* Loading animation for enhanced UX */
-        .loading-bar {
-            height: 3px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            background: var(--gray-200);
-            border-radius: 2px;
+        @keyframes heroReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .loading-bar:before {
-            content: '';
-            position: absolute;
-            height: 100%;
-            width: 50%;
-            background: var(--accent-gold);
-            animation: loading 1.5s infinite ease-in-out;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes loading {
-            0% { left: -50%; }
-            100% { left: 100%; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--transition-slow), transform 0.8s var(--transition-slow);
         }
 
-        /* Toast notifications for user feedback */
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === TOAST NOTIFICATION === */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: var(--primary-dark);
             color: var(--primary-light);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-medium);
             display: flex;
@@ -827,6 +1166,7 @@
             transform: translateY(100px);
             opacity: 0;
             transition: transform var(--transition-medium), opacity var(--transition-medium);
+            max-width: 400px;
         }
 
         .toast.active {
@@ -845,142 +1185,457 @@
             font-size: 0.8rem;
             color: var(--primary-dark);
         }
+
+        /* === MEDIA QUERIES === */
+        @media (max-width: 1024px) {
+            .hero-bg {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: var(--shadow-medium);
+                padding: 2rem 0;
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition-medium);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 0 2rem;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-bg {
+                width: 100%;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+                opacity: 0.1;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .trust-indicators {
+                gap: 1.5rem;
+                justify-content: center;
+            }
+            
+            .services-grid,
+            .features-grid,
+            .ai-features-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-item:not(:last-child):after {
+                display: none;
+            }
+
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+            
+            .feature-card,
+            .service-card,
+            .testimonial-card {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .feature-card,
+            .service-card {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Animated background elements -->
-    <div class="bg-elements">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">Alchemy Lumière</div>
+            <div class="loader"></div>
+            <div class="preloader-text">Initializing Digital Alchemy</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Animated Background Elements -->
+    <div class="bg-elements" id="bgElements">
+        <div class="bg-element"></div>
         <div class="bg-element"></div>
         <div class="bg-element"></div>
         <div class="bg-element"></div>
     </div>
 
-    <!-- Sidebar Navigation -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">D</div>
-                DeepSeek<span>v3</span>
+    <!-- Enhanced Premium Header -->
+    <header id="header">
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">AL</div>
+                Alchemy Lumière<span>v3</span>
             </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#ai-capabilities">AI Power</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="consultation.html" class="btn btn-secondary">Request Consultation</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="sidebar-nav">
-            <div class="nav-item active">
-                <span class="nav-icon">📊</span>
-                <span>Dashboard</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">📋</span>
-                <span>Consultations</span>
-                <span class="urgency-badge" id="newRequestsBadge">0 NEW</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span>Clients</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span>Analytics</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">⚙️</span>
-                <span>Settings</span>
-            </div>
-            <div class="nav-item">
-                <span class="nav-icon">🚪</span>
-                <span>Logout</span>
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="admin-header">
-            <div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <h1 class="admin-title">Consultation Requests</h1>
-                <p>Manage and review all consultation submissions</p>
-                <div class="social-proof">
-                    <span>👑 Premium clients this week: <strong id="premiumCount">0</strong></span>
+    <!-- Enhanced Premium Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-badge">AI-Powered Digital Alchemy</div>
+            <h1>Where Code Meets Artistry</h1>
+            <p class="hero-description">We transform digital visions into extraordinary experiences through the alchemy of cutting-edge AI, masterful design, and technical excellence.</p>
+            <div class="hero-actions">
+                <a href="#services" class="btn btn-primary">
+                    <i class="fas fa-gem"></i>
+                    Explore Services
+                </a>
+                <a href="consultation.html" class="btn btn-secondary">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    Begin Transformation
+                </a>
+            </div>
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <div class="trust-value">671B</div>
+                    <div class="trust-label">AI Parameters</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-value">37B</div>
+                    <div class="trust-label">Active per Token</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-value">14.8T</div>
+                    <div class="trust-label">Training Tokens</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-value">128K</div>
+                    <div class="trust-label">Context Window</div>
                 </div>
             </div>
-            <div class="admin-actions">
-                <button class="btn btn-outline" id="refreshBtn">Refresh Data</button>
-                <button class="btn" id="addNewBtn">Add New</button>
-            </div>
         </div>
+        <div class="hero-bg"></div>
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </section>
 
-        <!-- Stats Overview -->
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-value" id="totalRequests">0 <span class="stat-trend">+0%</span></div>
-                <div class="stat-label">Total Requests</div>
-                <div class="stat-progress">
-                    <div class="stat-progress-bar" style="width: 0%"></div>
-                </div>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>The Alchemy Lumière Difference</h2>
+                <p>We don't just build websites; we craft digital masterpieces that transform businesses</p>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="newRequests">0 <span class="stat-trend">+0%</span></div>
-                <div class="stat-label">New This Week</div>
-                <div class="stat-progress">
-                    <div class="stat-progress-bar" style="width: 0%"></div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Lightning Performance</h3>
+                    <p>Every website is meticulously optimized for speed with LCP under 2.5s, ensuring premium user experiences that convert at exceptional rates.</p>
                 </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="contactedRequests">0 <span class="stat-trend">+0%</span></div>
-                <div class="stat-label">Contacted</div>
-                <div class="stat-progress">
-                    <div class="stat-progress-bar" style="width: 0%"></div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Enterprise Security</h3>
+                    <p>End-to-end encryption, GDPR compliance, and rigorous security protocols protect your brand reputation and user data with military-grade precision.</p>
                 </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="completedRequests">0 <span class="stat-trend negative">-0%</span></div>
-                <div class="stat-label">Completed</div>
-                <div class="stat-progress">
-                    <div class="stat-progress-bar" style="width: 0%"></div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Bespoke Design</h3>
+                    <p>No templates. Every project begins with a blank canvas, meticulously crafted to reflect your unique brand identity and vision.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Conversion Optimized</h3>
+                    <p>Data-driven design decisions and strategic UX patterns maximize engagement and drive measurable business objectives with scientific precision.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>AI-Enhanced</h3>
+                    <p>Leverage our proprietary AI architecture to create intelligent, adaptive experiences that anticipate user needs and behaviors.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                    <h3>Future-Proof</h3>
+                    <p>Built with scalability and adaptability in mind, ensuring your digital presence evolves seamlessly with emerging technologies and trends.</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Consultation Requests Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <h2 class="table-title">Recent Requests</h2>
-                <div class="search-box">
-                    <input type="text" placeholder="Search requests..." id="searchInput">
-                    <span>🔍</span>
+    <!-- AI Capabilities Section -->
+    <section id="ai-capabilities" class="ai-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Powered by Alchemy Lumière AI Architecture</h2>
+                <p>Leveraging state-of-the-art 671B parameter model for intelligent digital experiences</p>
+            </div>
+            <div class="ai-features-grid">
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Multi-Token Prediction</h3>
+                    <p>Advanced AI that anticipates user behavior and optimizes experiences in real-time</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Efficient Inference</h3>
+                    <p>37B activated parameters per token ensure lightning-fast performance</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon"><i class="fas fa-expand"></i></div>
+                    <h3>128K Context Window</h3>
+                    <p>Comprehensive understanding of complex user journeys and interactions</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Adaptive Learning</h3>
+                    <p>Continuously improves based on user interactions and feedback</p>
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Company</th>
-                        <th>Service</th>
-                        <th>Budget</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="consultationTableBody">
-                    <!-- Table rows will be populated by JavaScript -->
-                </tbody>
-            </table>
         </div>
-    </div>
+    </section>
 
-    <!-- Consultation Detail Modal -->
-    <div class="modal" id="detailModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Consultation Request Details</h2>
-                <button class="modal-close" id="modalClose">&times;</button>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Our Exclusive Service Tiers</h2>
+                <p>Tailored solutions for visionary brands at every stage of their digital transformation</p>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Modal content will be populated by JavaScript -->
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <h3>Discovery & Strategy</h3>
+                    <p>Perfect for visionary brands needing a comprehensive digital roadmap before full-scale development.</p>
+                    <div class="price">From $1,500</div>
+                    <ul class="service-features">
+                        <li>In-depth brand & market analysis</li>
+                        <li>Competitive landscape assessment</li>
+                        <li>User journey mapping</li>
+                        <li>Technical requirements specification</li>
+                        <li>Project roadmap & timeline</li>
+                    </ul>
+                    <a href="consultation.html" class="btn btn-secondary">Request This Package</a>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Signature Website</h3>
+                    <p>Our most sought-after offering for established brands seeking a distinctive digital presence.</p>
+                    <div class="price">From $9,500</div>
+                    <ul class="service-features">
+                        <li>Custom visual identity & UI design</li>
+                        <li>Up to 8 page templates</li>
+                        <li>Advanced animations & interactions</li>
+                        <li>SEO-optimized structure</li>
+                        <li>CMS integration</li>
+                        <li>Performance optimization</li>
+                        <li>3 months of premium support</li>
+                    </ul>
+                    <a href="consultation.html" class="btn btn-primary">Request This Package</a>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Ultra Exclusive</h3>
+                    <p>For visionary brands requiring a completely bespoke digital ecosystem with advanced capabilities.</p>
+                    <div class="price">POA</div>
+                    <ul class="service-features">
+                        <li>Everything in Signature, plus:</li>
+                        <li>Fully custom functionality</li>
+                        <li>Advanced integrations</li>
+                        <li>AI-powered features</li>
+                        <li>Enterprise-grade security</li>
+                        <li>Dedicated project manager</li>
+                        <li>12 months premium support</li>
+                        <li>Quarterly performance reviews</li>
+                    </ul>
+                    <a href="consultation.html" class="btn btn-secondary">Request Custom Quote</a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Trusted by Visionary Brands</h2>
+                <p>Discover how Alchemy Lumière has transformed digital experiences for industry leaders</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        Alchemy Lumière transformed our digital presence completely. The AI-powered insights led to a 47% increase in conversions within the first month. Their attention to detail and technical excellence is simply unmatched.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SJ</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>CEO, LuxeBrand Global</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        The level of sophistication and attention to detail is unparalleled. Our website now feels like a true extension of our brand's luxury positioning. Working with Alchemy Lumière was a transformative experience.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Marcus Rodriguez</h4>
+                            <p>CTO, Nexus Analytics</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        Working with Alchemy Lumière felt like having a strategic partner rather than just a vendor. Their AI capabilities anticipated our needs before we even articulated them. The results have been extraordinary.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EV</div>
+                        <div class="author-info">
+                            <h4>Eleanor Vance</h4>
+                            <p>Marketing Director, Prestige Holdings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="section-header text-center">
+                    <h2>Ready to Begin Your Digital Transformation?</h2>
+                    <p>Join the exclusive group of visionary brands leveraging AI-powered digital excellence</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="consultation.html" class="btn btn-primary">
+                        <i class="fas fa-calendar-check"></i>
+                        Schedule Consultation
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        <i class="fas fa-book-open"></i>
+                        View Case Studies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <div class="logo-icon">AL</div>
+                        Alchemy Lumière<span>v3</span>
+                    </div>
+                    <p>Creating digital masterpieces powered by advanced AI architecture for visionary brands worldwide.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Discovery & Strategy</a></li>
+                        <li><a href="#services">Signature Website</a></li>
+                        <li><a href="#services">Ultra Exclusive</a></li>
+                        <li><a href="#ai-capabilities">AI Capabilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#features">Our Approach</a></li>
+                        <li><a href="#testimonials">Case Studies</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#ai-capabilities">AI Research</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Alchemy Lumière. All rights reserved. Crafted with precision and powered by AI.</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Toast Notification -->
     <div class="toast" id="toast">
@@ -989,64 +1644,119 @@
     </div>
 
     <script>
-        // DOM Elements
-        const sidebar = document.getElementById('sidebar');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const consultationTableBody = document.getElementById('consultationTableBody');
-        const detailModal = document.getElementById('detailModal');
-        const modalClose = document.getElementById('modalClose');
-        const modalBody = document.getElementById('modalBody');
-        const searchInput = document.getElementById('searchInput');
-        const addNewBtn = document.getElementById('addNewBtn');
-        const refreshBtn = document.getElementById('refreshBtn');
-        const toast = document.getElementById('toast');
-        const newRequestsBadge = document.getElementById('newRequestsBadge');
-        
-        // Stats elements
-        const totalRequestsEl = document.getElementById('totalRequests');
-        const newRequestsEl = document.getElementById('newRequests');
-        const contactedRequestsEl = document.getElementById('contactedRequests');
-        const completedRequestsEl = document.getElementById('completedRequests');
-        const premiumCountEl = document.getElementById('premiumCount');
-
-        // Mobile menu toggle with enhanced interaction
-        mobileMenuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
+        // === PRELOADER ===
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 1500);
         });
 
-        // Format date for display
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
+        // === CUSTOM CURSOR ===
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+            cursorFollower.style.transform = 'scale(1.2)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+            cursorFollower.style.transform = 'scale(1)';
+        });
+
+        // Add hover effect for interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .feature-card, .service-card, .ai-feature, .testimonial-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursorFollower.style.transform = 'scale(1.5)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursorFollower.style.transform = 'scale(1)';
+            });
+        });
+
+        // === SCROLL PROGRESS ===
+        function updateScrollProgress() {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
         }
 
-        // Get service display name
-        function getServiceName(serviceKey) {
-            const services = {
-                'discovery': 'Discovery & Strategy',
-                'signature': 'Signature Website',
-                'exclusive': 'Ultra Exclusive',
-                'custom': 'Custom Package'
-            };
-            return services[serviceKey] || serviceKey;
+        // === PARALLAX EFFECT ===
+        function updateParallax() {
+            const scrolled = window.scrollY;
+            const bgElements = document.getElementById('bgElements');
+            
+            if (bgElements) {
+                const elements = bgElements.querySelectorAll('.bg-element');
+                elements.forEach((el, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            }
+
+            // Hero parallax
+            const heroSection = document.querySelector('.hero');
+            if (heroSection && scrolled < window.innerHeight) {
+                const heroContent = heroSection.querySelector('.hero-content');
+                if (heroContent) {
+                    heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                    heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+                }
+            }
         }
 
-        // Get budget display text
-        function getBudgetText(budgetKey) {
-            const budgets = {
-                '5k-10k': '$5,000 - $10,000',
-                '10k-25k': '$10,000 - $25,000',
-                '25k-50k': '$25,000 - $50,000',
-                '50k-100k': '$50,000 - $100,000',
-                '100k-plus': '$100,000+',
-                'undecided': 'To be determined'
-            };
-            return budgets[budgetKey] || budgetKey;
-        }
+        // === HEADER SCROLL EFFECT ===
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                document.getElementById('header').classList.add('scrolled');
+            } else {
+                document.getElementById('header').classList.remove('scrolled');
+            }
 
-        // Show toast notification
+            updateScrollProgress();
+            requestAnimationFrame(updateParallax);
+        });
+
+        // === MOBILE MENU TOGGLE ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // === TOAST NOTIFICATION ===
         function showToast(message) {
+            const toast = document.getElementById('toast');
             toast.querySelector('.toast-message').textContent = message;
             toast.classList.add('active');
             
@@ -1055,308 +1765,83 @@
             }, 3000);
         }
 
-        // Update stats based on current data
-        function updateStats(consultationRequests) {
-            const total = consultationRequests.length;
-            const newCount = consultationRequests.filter(request => request.status === 'new').length;
-            const contacted = consultationRequests.filter(request => request.status === 'contacted').length;
-            const completed = consultationRequests.filter(request => request.status === 'completed').length;
-            
-            // Calculate new requests this week
-            const oneWeekAgo = new Date();
-            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-            const newThisWeek = consultationRequests.filter(request => {
-                const requestDate = new Date(request.date);
-                return requestDate >= oneWeekAgo && request.status === 'new';
-            }).length;
-            
-            // Update the stat cards
-            totalRequestsEl.innerHTML = `${total} <span class="stat-trend">+0%</span>`;
-            newRequestsEl.innerHTML = `${newThisWeek} <span class="stat-trend">+0%</span>`;
-            contactedRequestsEl.innerHTML = `${contacted} <span class="stat-trend">+0%</span>`;
-            completedRequestsEl.innerHTML = `${completed} <span class="stat-trend negative">-0%</span>`;
-            
-            // Update progress bars
-            document.querySelectorAll('.stat-progress-bar')[0].style.width = `${Math.min(100, (total / 50) * 100)}%`;
-            document.querySelectorAll('.stat-progress-bar')[1].style.width = `${Math.min(100, (newThisWeek / 10) * 100)}%`;
-            document.querySelectorAll('.stat-progress-bar')[2].style.width = `${Math.min(100, (contacted / total) * 100)}%`;
-            document.querySelectorAll('.stat-progress-bar')[3].style.width = `${Math.min(100, (completed / total) * 100)}%`;
-            
-            // Update new requests badge
-            newRequestsBadge.textContent = `${newCount} NEW`;
-            
-            // Update premium clients count (assuming premium clients have higher budgets)
-            const premiumClients = consultationRequests.filter(request => 
-                request.budget === '50k-100k' || request.budget === '100k-plus'
-            ).length;
-            premiumCountEl.textContent = premiumClients;
-        }
+        // === FADE IN ELEMENTS ON SCROLL ===
+        function checkFade() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
 
-        // Populate consultation table with enhanced UI
-        function populateConsultationTable(requests) {
-            consultationTableBody.innerHTML = '';
-            
-            if (requests.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td colspan="7" style="text-align: center; padding: 2rem;">
-                        <p>No consultation requests found</p>
-                    </td>
-                `;
-                consultationTableBody.appendChild(row);
-                return;
-            }
-            
-            // Sort by date (newest first)
-            requests.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            requests.forEach(request => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        <div style="font-weight: 600;">${request.firstName} ${request.lastName}</div>
-                        ${request.urgency === 'high' ? '<div class="urgency-badge">URGENT</div>' : ''}
-                    </td>
-                    <td>${request.company}</td>
-                    <td>${getServiceName(request.service)}</td>
-                    <td>${getBudgetText(request.budget)}</td>
-                    <td>${formatDate(request.date)}</td>
-                    <td><span class="status-badge status-${request.status}">${request.status.charAt(0).toUpperCase() + request.status.slice(1)}</span></td>
-                    <td class="action-buttons">
-                        <button class="btn btn-small btn-outline view-detail" data-id="${request.id}">View</button>
-                        <button class="btn btn-small edit-request" data-id="${request.id}">Edit</button>
-                    </td>
-                `;
-                consultationTableBody.appendChild(row);
-            });
-
-            // Add event listeners to view buttons
-            document.querySelectorAll('.view-detail').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const requestId = parseInt(e.target.getAttribute('data-id'));
-                    showRequestDetail(requestId, requests);
-                });
-            });
-
-            // Add event listeners to edit buttons
-            document.querySelectorAll('.edit-request').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const requestId = parseInt(e.target.getAttribute('data-id'));
-                    showToast(`Editing request #${requestId}`);
-                    // In a real app, this would open an edit form
-                });
-            });
-            
-            // Update the stats
-            updateStats(requests);
-        }
-
-        // Show request detail in modal with enhanced UX
-        function showRequestDetail(requestId, requests) {
-            const request = requests.find(r => r.id === requestId);
-            if (!request) return;
-
-            modalBody.innerHTML = `
-                <div class="detail-grid">
-                    <div class="detail-item">
-                        <div class="detail-label">Name</div>
-                        <div class="detail-value">${request.firstName} ${request.lastName}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Email</div>
-                        <div class="detail-value">${request.email}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Phone</div>
-                        <div class="detail-value">${request.phone}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Company</div>
-                        <div class="detail-value">${request.company}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Website</div>
-                        <div class="detail-value">${request.website}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Service Interest</div>
-                        <div class="detail-value">${getServiceName(request.service)}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Timeline</div>
-                        <div class="detail-value">${request.timeline}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Budget</div>
-                        <div class="detail-value">${getBudgetText(request.budget)}</div>
-                    </div>
-                    <div class="detail-item full-width">
-                        <div class="detail-label">Project Details</div>
-                        <div class="detail-value">${request.projectDetails}</div>
-                    </div>
-                    <div class="detail-item full-width">
-                        <div class="detail-label">Current Challenges</div>
-                        <div class="detail-value">${request.challenges}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Referral Source</div>
-                        <div class="detail-value">${request.referral}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Submission Date</div>
-                        <div class="detail-value">${formatDate(request.date)}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Status</div>
-                        <div class="detail-value"><span class="status-badge status-${request.status}">${request.status.charAt(0).toUpperCase() + request.status.slice(1)}</span></div>
-                    </div>
-                </div>
-                <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button class="btn mark-contacted" data-id="${request.id}">Mark as Contacted</button>
-                    <button class="btn btn-outline send-email" data-id="${request.id}">Send Email</button>
-                    <button class="btn btn-danger delete-request" data-id="${request.id}">Delete Request</button>
-                </div>
-            `;
-
-            // Add event listeners to modal buttons
-            document.querySelector('.mark-contacted').addEventListener('click', (e) => {
-                const id = parseInt(e.target.getAttribute('data-id'));
-                updateRequestStatus(id, 'contacted');
-                showToast(`Request #${id} marked as contacted`);
-                detailModal.classList.remove('active');
-                setTimeout(() => {
-                    detailModal.style.display = 'none';
-                }, 300);
-            });
-
-            document.querySelector('.send-email').addEventListener('click', (e) => {
-                const id = parseInt(e.target.getAttribute('data-id'));
-                showToast(`Email sent for request #${id}`);
-            });
-
-            document.querySelector('.delete-request').addEventListener('click', (e) => {
-                const id = parseInt(e.target.getAttribute('data-id'));
-                if (confirm('Are you sure you want to delete this request?')) {
-                    deleteRequest(id);
-                    showToast(`Request #${id} deleted`);
-                    detailModal.classList.remove('active');
+                if (elementTop < windowHeight * 0.85) {
                     setTimeout(() => {
-                        detailModal.style.display = 'none';
-                    }, 300);
+                        element.classList.add('visible');
+                    }, index * 100);
                 }
             });
-
-            detailModal.style.display = 'flex';
-            setTimeout(() => {
-                detailModal.classList.add('active');
-            }, 10);
         }
 
-        // Update request status
-        function updateRequestStatus(requestId, newStatus) {
-            const requests = JSON.parse(localStorage.getItem('consultationRequests')) || [];
-            const requestIndex = requests.findIndex(r => r.id === requestId);
-            if (requestIndex !== -1) {
-                requests[requestIndex].status = newStatus;
-                localStorage.setItem('consultationRequests', JSON.stringify(requests));
-                loadConsultationData();
-            }
-        }
+        window.addEventListener('scroll', checkFade);
+        window.addEventListener('load', checkFade);
 
-        // Delete request
-        function deleteRequest(requestId) {
-            let requests = JSON.parse(localStorage.getItem('consultationRequests')) || [];
-            requests = requests.filter(r => r.id !== requestId);
-            localStorage.setItem('consultationRequests', JSON.stringify(requests));
-            loadConsultationData();
-        }
+        // === MAGNETIC BUTTON EFFECT ===
+        function addMagneticEffect() {
+            const buttons = document.querySelectorAll('.btn');
 
-        // Close modal with enhanced animation
-        modalClose.addEventListener('click', () => {
-            detailModal.classList.remove('active');
-            setTimeout(() => {
-                detailModal.style.display = 'none';
-            }, 300);
-        });
+            buttons.forEach(button => {
+                button.addEventListener('mousemove', (e) => {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
 
-        // Close modal when clicking outside
-        detailModal.addEventListener('click', (e) => {
-            if (e.target === detailModal) {
-                detailModal.classList.remove('active');
-                setTimeout(() => {
-                    detailModal.style.display = 'none';
-                }, 300);
-            }
-        });
-
-        // Search functionality with debouncing
-        let searchTimeout;
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const searchTerm = e.target.value.toLowerCase();
-                const requests = JSON.parse(localStorage.getItem('consultationRequests')) || [];
-                
-                if (searchTerm) {
-                    const filteredRequests = requests.filter(request => 
-                        request.firstName.toLowerCase().includes(searchTerm) ||
-                        request.lastName.toLowerCase().includes(searchTerm) ||
-                        request.company.toLowerCase().includes(searchTerm) ||
-                        request.service.toLowerCase().includes(searchTerm)
-                    );
-                    populateConsultationTable(filteredRequests);
-                } else {
-                    populateConsultationTable(requests);
-                }
-            }, 300);
-        });
-
-        // Add new request button
-        addNewBtn.addEventListener('click', () => {
-            showToast('Creating new consultation request');
-            // In a real app, this would open a form to add a new request
-        });
-
-        // Refresh data button
-        refreshBtn.addEventListener('click', () => {
-            loadConsultationData();
-            showToast('Data refreshed successfully');
-        });
-
-        // Load consultation data from localStorage
-        function loadConsultationData() {
-            const requests = JSON.parse(localStorage.getItem('consultationRequests')) || [];
-            populateConsultationTable(requests);
-        }
-
-        // Initialize the page with enhanced UX
-        document.addEventListener('DOMContentLoaded', () => {
-            // Animate progress bars on load
-            setTimeout(() => {
-                document.querySelectorAll('.stat-progress-bar').forEach(bar => {
-                    bar.style.width = bar.style.width;
+                    button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.03)`;
                 });
-            }, 500);
-            
-            loadConsultationData();
-            
-            // Show welcome message
-            setTimeout(() => {
-                showToast('Welcome to your premium dashboard');
-            }, 1000);
-            
-            // Set up auto-refresh every 30 seconds
-            setInterval(loadConsultationData, 30000);
-        });
 
-        // Close sidebar when clicking on a nav item on mobile
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth < 992) {
-                    sidebar.classList.remove('active');
-                    document.body.style.overflow = 'auto';
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translate(0, 0) scale(1)';
+                });
+            });
+        }
+
+        // Initialize magnetic effect on desktop
+        if (window.innerWidth > 768) {
+            addMagneticEffect();
+        }
+
+        // === SMOOTH SCROLLING ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
                 }
             });
+        });
+
+        // === SERVICE CARD INTERACTIONS ===
+        document.querySelectorAll('.service-card .btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const serviceName = e.target.closest('.service-card').querySelector('h3').textContent;
+                showToast(`Request sent for ${serviceName} package`);
+            });
+        });
+
+        // === INITIALIZE ON LOAD ===
+        document.addEventListener('DOMContentLoaded', () => {
+            checkFade();
+            
+            // Show welcome message after a short delay
+            setTimeout(() => {
+                showToast('Welcome to Alchemy Lumière - Where Digital Dreams Become Reality');
+            }, 2000);
         });
     </script>
 </body>
