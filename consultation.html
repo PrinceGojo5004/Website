@@ -1091,11 +1091,6 @@
                 </div>
             </div>
         </div>
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-        </div>
     </section>
 
     <!-- Consultation Process -->
@@ -1421,7 +1416,36 @@
             // Show loading state
             submitBtn.classList.add('btn-loading');
             
-            // Simulate API call
+            // Create consultation request object
+            const consultationRequest = {
+                id: Date.now(), // Unique ID based on timestamp
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                company: document.getElementById('company').value,
+                website: document.getElementById('website').value,
+                service: document.querySelector('input[name="service"]:checked').value,
+                timeline: document.getElementById('timeline').value,
+                budget: document.getElementById('budget').value,
+                projectDetails: document.getElementById('projectDetails').value,
+                challenges: document.getElementById('challenges').value,
+                referral: document.getElementById('referral').value,
+                date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+                status: 'new',
+                urgency: document.getElementById('timeline').value === 'immediate' ? 'high' : 'medium'
+            };
+
+            // Get existing requests from localStorage or initialize empty array
+            const existingRequests = JSON.parse(localStorage.getItem('consultationRequests')) || [];
+            
+            // Add new request to the array
+            existingRequests.push(consultationRequest);
+            
+            // Save back to localStorage
+            localStorage.setItem('consultationRequests', JSON.stringify(existingRequests));
+            
+            // Simulate API call delay
             setTimeout(() => {
                 // Show success message
                 consultationForm.style.display = 'none';
@@ -1433,9 +1457,8 @@
                 // Show success toast
                 showToast('Consultation request submitted successfully!');
                 
-                // You would typically send the data to your server here
-                // const formData = new FormData(consultationForm);
-                // fetch('/submit-consultation', { method: 'POST', body: formData });
+                // Reset form
+                consultationForm.reset();
             }, 2000);
         });
 
