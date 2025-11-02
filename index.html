@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchemy Lumière | AI-Powered Digital Excellence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Premium Variables */
+        :root {
+            --primary-dark: #0A0A0A;
+            --primary-light: #FFFFFF;
+            --accent-gold: #143627;
+            --accent-gold-light: #E0F2E9;
+            --accent-bronze: #8B7355;
+            --accent-silver: #C0C0C0;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E5E5E5;
+            --gray-800: #262626;
+            --transition-slow: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition-medium: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition-fast: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --shadow-intense: 0 30px 60px rgba(0, 0, 0, 0.18);
+            --shadow-glow: 0 0 60px rgba(212, 175, 55, 0.15);
+            --shadow-gold-intense: 0 0 100px rgba(212, 175, 55, 0.3);
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+            --section-padding: clamp(4rem, 8vw, 8rem) 0;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--primary-dark);
+            background-color: var(--primary-light);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+        }
+
+        /* Smooth Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze), var(--accent-silver));
+            z-index: 10000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Enhanced Animated Background Elements with Parallax */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-gold-light) 0%, rgba(20, 54, 39, 0.3) 40%, transparent 70%);
+            opacity: 0.04;
+            animation: float 20s infinite ease-in-out;
+            filter: blur(60px);
+            will-change: transform;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        .bg-element:nth-child(4) {
+            width: 350px;
+            height: 350px;
+            top: 30%;
+            left: 50%;
+            animation-delay: -7s;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            position: relative;
+        }
+
+        h3 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: var(--gray-800);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 4vw, 2rem);
+        }
+
+        section {
+            padding: var(--section-padding);
+            position: relative;
+        }
+
+        /* Enhanced Premium Button Styles with Magnetic Effect */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.35rem 2.75rem;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            gap: 0.75rem;
+            box-shadow:
+                0 6px 20px rgba(20, 54, 39, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            transition: var(--transition-medium);
+            z-index: -1;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover:before {
+            width: 100%;
+        }
+
+        .btn:hover {
+            color: var(--accent-gold);
+            box-shadow:
+                0 12px 35px rgba(20, 54, 39, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.02);
+            transition: var(--transition-fast);
+        }
+
+        .btn:active:after {
+            width: 300px;
+            height: 300px;
+            transition: 0s;
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: none;
+        }
+
+        .btn-secondary:before {
+            background: var(--accent-gold);
+        }
+
+        .btn-secondary:hover {
+            color: var(--primary-dark);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-accent {
+            color: var(--accent-gold);
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            display: inline-block;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .text-center .section-header h2:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Enhanced Premium Header with Advanced Glassmorphism */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: var(--transition-medium);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            box-shadow:
+                0 4px 30px rgba(0, 0, 0, 0.08),
+                0 0 1px rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+            margin-left: 0.25rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-right: 0.85rem;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            box-shadow:
+                0 6px 20px rgba(20, 54, 39, 0.4),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.1),
+                inset 0 2px 8px rgba(255, 255, 255, 0.3);
+            transition: var(--transition-medium);
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-gold), var(--accent-silver), var(--accent-bronze), var(--accent-gold));
+            background-size: 300% 300%;
+            animation: gradientRotate 4s linear infinite;
+            z-index: -1;
+            opacity: 0;
+            filter: blur(6px);
+            transition: var(--transition-medium);
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow:
+                0 8px 25px rgba(20, 54, 39, 0.6),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.15),
+                inset 0 2px 8px rgba(255, 255, 255, 0.4);
+        }
+
+        .logo:hover .logo-icon::before {
+            opacity: 0.6;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: var(--transition-medium);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-dark);
+            z-index: 1001;
+            width: 30px;
+            height: 30px;
+            position: relative;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-dark);
+            margin: 6px 0;
+            transition: var(--transition-medium);
+        }
+
+        /* Enhanced Premium Hero Section with Parallax */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--gray-50) 50%, var(--gray-100) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 80%, rgba(139, 115, 85, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .hero-content {
+            max-width: 950px;
+            position: relative;
+            z-index: 2;
+            animation: heroReveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            opacity: 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            color: var(--primary-dark);
+            padding: 0.65rem 1.35rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            box-shadow:
+                0 6px 20px rgba(20, 54, 39, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.375rem;
+            margin-bottom: 3rem;
+            color: var(--gray-800);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-indicators {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .trust-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .trust-label {
+            font-size: 0.875rem;
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+
+        .trust-item:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: var(--gray-200);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 45%;
+            height: 100%;
+            background: var(--primary-dark);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+
+        .hero-bg:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 115, 85, 0.05) 100%);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: var(--accent-gold);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            left: 10%;
+            animation: float 20s infinite linear;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            left: 5%;
+            animation: float 15s infinite linear reverse;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            right: 15%;
+            animation: float 18s infinite linear;
+        }
+
+        /* Enhanced Premium Features Section */
+        .features {
+            background: var(--gray-100);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 3.5rem 2.75rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow:
+                var(--shadow-soft),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: var(--transition-medium);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            transition: var(--transition-medium);
+            z-index: -1;
+        }
+
+        .feature-card:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(20, 54, 39, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition-slow);
+            pointer-events: none;
+        }
+
+        .feature-card:hover:before {
+            height: 100%;
+        }
+
+        .feature-card:hover:after {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow:
+                var(--shadow-intense),
+                0 0 40px rgba(20, 54, 39, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border-color: rgba(20, 54, 39, 0.3);
+        }
+
+        .feature-card:hover .feature-icon,
+        .feature-card:hover h3,
+        .feature-card:hover p {
+            color: var(--primary-dark);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            transition: var(--transition-medium);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            transition: var(--transition-medium);
+        }
+
+        .feature-card p {
+            transition: var(--transition-medium);
+        }
+
+        /* AI Capabilities Section */
+        .ai-section {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-section .section-header h2:after {
+            background: var(--primary-light);
+        }
+
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .ai-feature {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            transition: var(--transition-medium);
+        }
+
+        .ai-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .ai-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-feature h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .service-card {
+            background: var(--gray-100);
+            padding: 3rem 2.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition-medium);
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--accent-gold);
+            transition: var(--transition-medium);
+            z-index: -1;
+        }
+
+        .service-card:hover:before {
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .service-card:hover h3,
+        .service-card:hover .price,
+        .service-card:hover .service-features li {
+            color: var(--primary-dark);
+        }
+
+        .service-card h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            transition: var(--transition-medium);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--accent-gold);
+            transition: var(--transition-medium);
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .service-features li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.75rem;
+            transition: var(--transition-medium);
+        }
+
+        .service-features li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 700;
+            transition: var(--transition-medium);
+        }
+
+        .service-card:hover .service-features li:before {
+            color: var(--primary-dark);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: var(--gray-100);
+            position: relative;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--primary-light);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-medium);
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-quote:before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            font-size: 4rem;
+            color: var(--accent-gold);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--gray-800);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a1a 100%);
+            color: var(--primary-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section .section-header h2:after {
+            background: var(--accent-gold);
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo span {
+            color: var(--accent-gold);
+        }
+
+        .footer-links h4 {
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-200);
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-200);
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        @keyframes gradientRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes badgePulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes heroReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--transition-slow), transform 0.8s var(--transition-slow);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform var(--transition-medium), opacity var(--transition-medium);
+        }
+
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .header-content {
+                position: relative;
+            }
+            
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: var(--shadow-medium);
+                padding: 2rem 0;
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition-medium);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 0 2rem;
+            }
+            
+            nav a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-bg {
+                width: 100%;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+                opacity: 0.1;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .trust-indicators {
+                gap: 1.5rem;
+                justify-content: center;
+            }
+            
+            .services-grid,
+            .features-grid,
+            .ai-features-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-item:not(:last-child):after {
+                display: none;
+            }
+
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .feature-card,
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Animated Background Elements -->
+    <div class="bg-elements" id="bgElements">
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+        <div class="bg-element"></div>
+    </div>
+
+    <!-- Enhanced Premium Header -->
+    <header id="header">
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="Alchemy Lumière Logo" class="logo-icon" />
+                Alchemy Lumière<span>v3</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#ai-capabilities">AI Power</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact" class="btn btn-secondary">Request Consultation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Enhanced Premium Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-badge">AI-Powered Excellence</div>
+            <h1>Digital Masterpieces Powered by DeepSeek AI</h1>
+            <p class="hero-description">Leveraging advanced AI architecture to create exclusive, bespoke web experiences that anticipate user needs and drive exponential growth.</p>
+            <div class="hero-actions">
+                <a href="#services" class="btn btn-primary">
+                    Explore AI Services
+                </a>
+                <a href="#ai-capabilities" class="btn btn-secondary">
+                    View AI Demo
+                </a>
+            </div>
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <div class="trust-value">671B</div>
+                    <div class="trust-label">AI Parameters</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-value">37B</div>
+                    <div class="trust-label">Active per Token</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-value">14.8T</div>
+                    <div class="trust-label">Training Tokens</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg"></div>
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Why Alchemy Lumière Stands Apart</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Performance</h3>
+                    <p>Every website is meticulously optimized for speed with LCP under 2.5s, ensuring premium user experiences that convert at exceptional rates.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>End-to-end encryption, GDPR compliance, and rigorous security protocols protect your brand reputation and user data with military-grade precision.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Bespoke Design</h3>
+                    <p>No templates. Every project begins with a blank canvas, meticulously crafted to reflect your unique brand identity and vision.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📈</div>
+                    <h3>Conversion Optimized</h3>
+                    <p>Data-driven design decisions and strategic UX patterns maximize engagement and drive measurable business objectives with scientific precision.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Capabilities Section -->
+    <section id="ai-capabilities" class="ai-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Powered by Alchemy Lumière AI Architecture</h2>
+                <p>Leveraging state-of-the-art 671B parameter model for intelligent digital experiences</p>
+            </div>
+            <div class="ai-features-grid">
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon">🧠</div>
+                    <h3>Multi-Token Prediction</h3>
+                    <p>Advanced AI that anticipates user behavior and optimizes experiences in real-time</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon">⚡</div>
+                    <h3>Efficient Inference</h3>
+                    <p>37B activated parameters per token ensure lightning-fast performance</p>
+                </div>
+                <div class="ai-feature fade-in">
+                    <div class="ai-icon">🌐</div>
+                    <h3>128K Context Window</h3>
+                    <p>Comprehensive understanding of complex user journeys and interactions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Our Exclusive Service Tiers</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <h3>Discovery & Strategy</h3>
+                    <p>Perfect for visionary brands needing a comprehensive digital roadmap before full-scale development.</p>
+                    <div class="price">From $1,500</div>
+                    <ul class="service-features">
+                        <li>In-depth brand & market analysis</li>
+                        <li>Competitive landscape assessment</li>
+                        <li>User journey mapping</li>
+                        <li>Technical requirements specification</li>
+                        <li>Project roadmap & timeline</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary">Request This Package</a>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Signature Website</h3>
+                    <p>Our most sought-after offering for established brands seeking a distinctive digital presence.</p>
+                    <div class="price">From $9,500</div>
+                    <ul class="service-features">
+                        <li>Custom visual identity & UI design</li>
+                        <li>Up to 8 page templates</li>
+                        <li>Advanced animations & interactions</li>
+                        <li>SEO-optimized structure</li>
+                        <li>CMS integration</li>
+                        <li>Performance optimization</li>
+                        <li>3 months of premium support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Request This Package</a>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Ultra Exclusive</h3>
+                    <p>For visionary brands requiring a completely bespoke digital ecosystem with advanced capabilities.</p>
+                    <div class="price">POA</div>
+                    <ul class="service-features">
+                        <li>Everything in Signature, plus:</li>
+                        <li>Fully custom functionality</li>
+                        <li>Advanced integrations</li>
+                        <li>AI-powered features</li>
+                        <li>Enterprise-grade security</li>
+                        <li>Dedicated project manager</li>
+                        <li>12 months premium support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary">Request Custom Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Trusted by Visionary Brands</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        Alchemy Lumière transformed our digital presence completely. The AI-powered insights led to a 47% increase in conversions within the first month.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>CEO, LuxeBrand Global</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        The level of sophistication and attention to detail is unparalleled. Our website now feels like a true extension of our brand's luxury positioning.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h4>Marcus Rodriguez</h4>
+                            <p>CTO, Nexus Analytics</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">
+                        Working with DeepSeek felt like having a strategic partner rather than just a vendor. Their AI capabilities anticipated our needs before we even articulated them.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">E</div>
+                        <div class="author-info">
+                            <h4>Eleanor Vance</h4>
+                            <p>Marketing Director, Prestige Holdings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="section-header text-center">
+                    <h2>Ready to Transform Your Digital Presence?</h2>
+                    <p>Join the exclusive group of visionary brands leveraging AI-powered digital excellence</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/Website/consultation.html" class="btn btn-primary" >Schedule Consultation</a>
+                    <a href="#services" class="btn btn-secondary">View Case Studies</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <div class="logo-icon">D</div>
+                        Alchemy Lumière<span>v3</span>
+                    </div>
+                    <p>Creating digital masterpieces powered by advanced AI architecture for visionary brands worldwide.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Discovery & Strategy</a></li>
+                        <li><a href="#services">Signature Website</a></li>
+                        <li><a href="#services">Ultra Exclusive</a></li>
+                        <li><a href="#ai-capabilities">AI Capabilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#features">Our Approach</a></li>
+                        <li><a href="#testimonials">Case Studies</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#ai-capabilities">AI Research</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Alchemy Lumière. All rights reserved. Crafted with precision and powered by AI.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-message">Action completed successfully</div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const header = document.getElementById('header');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const toast = document.getElementById('toast');
+        const scrollProgress = document.getElementById('scrollProgress');
+        const bgElements = document.getElementById('bgElements');
+        const heroSection = document.querySelector('.hero');
+
+        // Scroll Progress Bar
+        function updateScrollProgress() {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        }
+
+        // Parallax Effect for Background Elements
+        function updateParallax() {
+            const scrolled = window.scrollY;
+            if (bgElements) {
+                const elements = bgElements.querySelectorAll('.bg-element');
+                elements.forEach((el, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    el.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            }
+
+            // Hero parallax
+            if (heroSection && scrolled < window.innerHeight) {
+                const heroContent = heroSection.querySelector('.hero-content');
+                if (heroContent) {
+                    heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                    heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+                }
+            }
+        }
+
+        // Header scroll effect with progress bar
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            updateScrollProgress();
+            requestAnimationFrame(updateParallax);
+        });
+
+        // Enhanced Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            document.body.style.overflow = mainNav.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Show toast notification
+        function showToast(message) {
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('active');
+            
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 3000);
+        }
+
+        // Enhanced Fade in elements on scroll with stagger
+        function checkFade() {
+            fadeElements.forEach((element, index) => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight * 0.85) {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkFade);
+        window.addEventListener('load', checkFade);
+
+        // Magnetic Button Effect
+        function addMagneticEffect() {
+            const buttons = document.querySelectorAll('.btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('mousemove', (e) => {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.03)`;
+                });
+
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translate(0, 0) scale(1)';
+                });
+            });
+        }
+
+        // Initialize magnetic effect on desktop
+        if (window.innerWidth > 768) {
+            addMagneticEffect();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add interaction to service cards
+        document.querySelectorAll('.service-card .btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const serviceName = e.target.closest('.service-card').querySelector('h3').textContent;
+                showToast(`Request sent for ${serviceName} package`);
+            });
+        });
+
+        // Initialize fade elements on load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkFade();
+            
+            // Show welcome message after a short delay
+            setTimeout(() => {
+                showToast('Welcome to Alchemy Lumière - AI-Powered Digital Excellence');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
